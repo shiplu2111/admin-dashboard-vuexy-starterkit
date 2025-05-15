@@ -3,7 +3,7 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
 import AuthProvider from '@/components/AuthProvider'
 // Third-party Imports
 import 'react-perfect-scrollbar/dist/css/styles.css'
-
+import toast, { Toaster } from 'react-hot-toast'
 // Type Imports
 import type { ChildrenType } from '@core/types'
 
@@ -34,6 +34,7 @@ const RootLayout = async (props: ChildrenType) => {
     <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
       <body className='flex is-full min-bs-full flex-auto flex-col'>
         <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
+        <Toaster position='top-right' reverseOrder={false} />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

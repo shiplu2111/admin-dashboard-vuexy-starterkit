@@ -36,6 +36,7 @@ import themeConfig from '@configs/themeConfig'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
+import toast from 'react-hot-toast'
 
 // Styled Custom Components
 const LoginIllustration = styled('img')(({ theme }) => ({
@@ -68,12 +69,7 @@ const LoginV2 = ({ mode }: { mode: SystemMode }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { status } = useSession()
-  useEffect(() => {
-    if (status != 'unauthenticated') {
-      router.replace('/dashboard')
-    }
-  }, [status])
-  // Vars
+
   const darkImg = '/images/pages/auth-mask-dark.png'
   const lightImg = '/images/pages/auth-mask-light.png'
   const darkIllustration = '/images/illustrations/auth/v2-login-dark.png'
@@ -99,6 +95,11 @@ const LoginV2 = ({ mode }: { mode: SystemMode }) => {
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!email || !password) {
+      toast.error('Please enter email or username and password')
+      // alert('Please enter email and password')
+      return
+    }
     const res = await signIn('credentials', {
       email_or_username: email,
       password,
@@ -107,8 +108,11 @@ const LoginV2 = ({ mode }: { mode: SystemMode }) => {
 
     if (res?.ok) {
       router.push('/dashboard')
+      toast.success('Login successful')
+      // alert('Login successful')
     } else {
-      alert('Invalid credentials')
+      toast.error('Invalid credentials')
+      // alert('Invalid credentials')
     }
   }
 

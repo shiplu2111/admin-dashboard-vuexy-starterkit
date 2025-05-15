@@ -1,9 +1,11 @@
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/auth'
 // MUI Imports
 import Button from '@mui/material/Button'
 import ProtectedLayout from '@/components/ProtectedLayout'
 // Type Imports
 import type { ChildrenType } from '@core/types'
-
 // Layout Imports
 import LayoutWrapper from '@layouts/LayoutWrapper'
 import VerticalLayout from '@layouts/VerticalLayout'
@@ -22,6 +24,11 @@ import ScrollToTop from '@core/components/scroll-to-top'
 import { getMode, getSystemMode } from '@core/utils/serverHelpers'
 
 const Layout = async (props: ChildrenType) => {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect('/login')
+  }
   const { children } = props
 
   // Vars
