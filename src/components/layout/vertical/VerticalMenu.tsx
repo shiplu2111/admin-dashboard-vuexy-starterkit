@@ -1,6 +1,6 @@
 // MUI Imports
 import { useTheme } from '@mui/material/styles'
-
+import mainMenu from '@/navigation/mainMenu'
 // Third-party Imports
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
@@ -68,12 +68,17 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         renderExpandedMenuItemIcon={{ icon: <i className='tabler-circle text-xs' /> }}
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
       >
-        <MenuItem href='/dashboard' icon={<i className='tabler-smart-home' />}>
+        {mainMenu().map(item => (
+          <MenuItem key={item.label} href={item.href} icon={<i className={item.icon} />}>
+            {item.label}
+          </MenuItem>
+        ))}
+        {/* <MenuItem href='/dashboard' icon={<i className='tabler-smart-home' />}>
           Dashboard
         </MenuItem>
         <MenuItem href='/about' icon={<i className='tabler-info-circle' />}>
           About
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
       {/* <Menu
         popoutMenuOffset={{ mainAxis: 23 }}
